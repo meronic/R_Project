@@ -42,4 +42,7 @@ class(xmlFile)
 
 xmlRoot(xmlFile)
 
+df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # xml파일의 경로 지정 node를 뽑아 오기 위해
+node <- getNodeSet(xmlFile, "//items/item")
+
 
