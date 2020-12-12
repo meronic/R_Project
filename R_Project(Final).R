@@ -23,7 +23,7 @@ api_key <-"lwDKSK7DSVTyedqIe8YCWlknOzQbgd6WN2LOD%2BMlnd1qIlCespH9fnunDeWfLWUmL3t
 rgnCd <- "A101" #지역코드
 seriesCd <- "02"  #계열코드
 baseYY <- "2018"  #기준년도
-quart <- "2"      #분기
+quart <- "3"      #분기
 
 
 # 요청은 ?로 보낸다
@@ -45,7 +45,7 @@ xmlRoot(xmlFile)
 #xmlToDataFrma() : xml문서로부터 데이터 추출, 데이터프레임을 반환함
 df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # xml파일의 경로 지정 node를 뽑아 오기 위해
 df
-
+View(df)
 
 node <- getNodeSet(xmlFile, "//items/item")
 node
@@ -54,6 +54,12 @@ node
 #geom_bar() : 막대그래프 만드는 함수
 dev.new()
 ggplot(data=df, aes(x=jmNm, y=totcnt))+
-  geom_bar(stat="identity", fill="green")
+  geom_bar(stat='identity', fill="red")+
+  
+  #theme() : 테마 설정 theme(x축 눈금 라벨 설정)
+  theme(axis.text.x = element_text(angle=90), plot.title = element_text((size="20", color="black")))+
+  
+  #labs() : title 지정
+  labs(title="oo지역 00분기", x="취득자 수", y="기능장 명")
 
 
