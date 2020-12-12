@@ -24,8 +24,8 @@ api_key <-"lwDKSK7DSVTyedqIe8YCWlknOzQbgd6WN2LOD%2BMlnd1qIlCespH9fnunDeWfLWUmL3t
 # 시작년도 (2015년도)
 baseYY = 2015 
 
-# 특정지역 (서울)
-rgnCd <- "A101" #지역코드
+# 특정지역 (전라남도)
+rgnCd <- "A113" #지역코드
 
 # '기능장' 자격증 설정 
 seriesCd <- "02"  #계열코드
@@ -35,12 +35,15 @@ quart <- "1"      #분기코드
 
 # 3년 데이터 탐색 시작
 
+
+
 for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2 
-  print(baseYY)
   
   # 4분기 반복
   for (quart in 1:4) {
-    print(quart)
+    
+    # 진행 상황 출력
+    print(paste("전남지역",baseYY,"년도",quart,"분기 데이터"))
     
     # 요청경로 설정
     url <- paste(api,"?serviceKey=",api_key,"&rgnCd=",rgnCd,"&seriesCd=",seriesCd,"&baseYY=",baseYY,"&quart=",quart)
@@ -61,21 +64,17 @@ for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2
     
     #dim() : 객체의 차원을 조회
     size <- dim(df)[1] # 데이터의 개수를 조회하여 size변수에 저장
-    
-    #저장하는 size결정 6개 이상, 12개이하 경우만 파일로 저장함
-    if (size >= 6 && size <= 12){
-      
-      #(매우중요) 현 디렉토리에 csv파일로 저장
-      setwd(getwd()) # 작업디렉토리를 현 경로로 설정
-      
-      # 파일 이름 지정
-      path = paste(studentNumber,"_",baseYY,"_",quart,".csv")
-      
-      # 지정된 이름으로 파일 저장
-      write.csv(df,path)
-    }
+    print(paste("데이터의 개수", size))
     
     
+    #(매우중요) 현 디렉토리에 csv파일로 저장
+    setwd(getwd()) # 작업디렉토리를 현 경로로 설정
+    
+    # 파일 이름 지정
+    path = paste(studentNumber,"_",baseYY,"_",quart,".csv")
+    
+    # 지정된 이름으로 파일 저장
+    write.csv(df,path)
   }
 }
 
