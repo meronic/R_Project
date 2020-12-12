@@ -34,15 +34,26 @@ url <- paste(api,"?serviceKey=",api_key,"&rgnCd=",rgnCd,"&seriesCd=",seriesCd,"&
 url <- gsub("\\s", "", url)
 url
 
+#xmlParse() : xml, HTML파일을 R에서 인식하는 구조로 변환
 xmlFile <- xmlParse(url)
 
-xmlFile
 
-class(xmlFile)
-
+#xmlRott() : xml 문서 객체의 루트 노드에 접근
 xmlRoot(xmlFile)
 
+
+#xmlToDataFrma() : xml문서로부터 데이터 추출, 데이터프레임을 반환함
 df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # xml파일의 경로 지정 node를 뽑아 오기 위해
+df
+
+
 node <- getNodeSet(xmlFile, "//items/item")
+node
+
+# 데이터 구조화
+#geom_bar() : 막대그래프 만드는 함수
+dev.new()
+ggplot(data=df, aes(x=jmNm, y=totcnt))+
+  geom_bar(stat="identity", fill="green")
 
 
