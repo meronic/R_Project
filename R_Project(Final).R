@@ -1,22 +1,22 @@
+# 기말고사 대체과제 2번 문제제
+# 컴퓨터소프트웨어공학과 20162908 유명현
+
+# 사용하는 라이브러리 올리기기
 # install.packages("rvest")
 # install.packages("XML")
-# install.packages("gglot2")
+
 library(rvest)
 library(XML)
-library(ggplot2)
 
-#xmlParse() : xml, HTML파일을 R에서 인식하는 구조로 변환
-#xmlRott() : xml 문서 객체의 루트 노드에 접근
-#xmlToDataFrma() : xml문서로부터 데이터 추출, 데이터프레임을 반환함
+# 학번
+studentNumber = "20162908"
 
-#geom_bar() : 막대그래프 만드는 함수
-#theme() : 테마 설정 theme(x축 눈금 라벨 설정)
-#scale_fill_manual() : 관점의 색 출력
-#coord_flip() : 수평과 수직 축을 서로 바꿈
+# 1. api관련 검색
 
 #api 정보
 api <- "http://openapi.q-net.or.kr/api/service/rest/InquiryRgnQualSVC/getYearList"
 api_key <-"lwDKSK7DSVTyedqIe8YCWlknOzQbgd6WN2LOD%2BMlnd1qIlCespH9fnunDeWfLWUmL3t2YLvJ5G5dXOloVYD%2BRA%3D%3D"
+
 
 #요청변수 정보
 
@@ -25,14 +25,10 @@ seriesCd <- "02"  #계열코드
 baseYY <- "2018"  #기준년도
 quart <- "3"      #분기
 
-
-# 요청은 ?로 보낸다
-# 그 다음은&
-
+# 요청경로 설정
 url <- paste(api,"?serviceKey=",api_key,"&rgnCd=",rgnCd,"&seriesCd=",seriesCd,"&baseYY=",baseYY,"&quart=",quart)
 # url모든 공백 제거
 url <- gsub("\\s", "", url)
-url
 
 #xmlParse() : xml, HTML파일을 R에서 인식하는 구조로 변환
 xmlFile <- xmlParse(url)
@@ -44,22 +40,25 @@ xmlRoot(xmlFile)
 
 #xmlToDataFrma() : xml문서로부터 데이터 추출, 데이터프레임을 반환함
 df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # xml파일의 경로 지정 node를 뽑아 오기 위해
-df
-View(df)
 
-node <- getNodeSet(xmlFile, "//items/item")
-node
 
-# 데이터 구조화
-#geom_bar() : 막대그래프 만드는 함수
-dev.new()
-ggplot(data=df, aes(x=jmNm, y=totcnt))+
-  geom_bar(stat='identity', fill="red")+
+#dim() : 객체의 차원을 조회
+size <- dim(df)[1] # 데이터의 개수를 조회하여 size변수에 저장
+
+#저장하는 size결정 6개 이상, 12개이하 경우만 파일로 저장함
+if (size >= 6 && size <= 12){
   
-  #theme() : 테마 설정 theme(x축 눈금 라벨 설정)
-  theme(axis.text.x = element_text(angle=90), plot.title = element_text((size="20", color="black")))+
+  #(매우중요) 현 디렉토리에 csv파일로 저장
+  setwd(getwd()) # 작업디렉토리를 현 경로로 설정
   
-  #labs() : title 지정
-  labs(title="oo지역 00분기", x="취득자 수", y="기능장 명")
+  # 파일 이름 지정
+  path = paste(year,"_",baseYY,"_",quart,".csv")
+  
+  # 지정된 이름으로 파일 저장
+  write.csv(df,path)
+}
+
+
+
 
 
