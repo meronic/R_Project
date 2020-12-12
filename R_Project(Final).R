@@ -64,17 +64,27 @@ for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2
     
     #dim() : 객체의 차원을 조회
     size <- dim(df)[1] # 데이터의 개수를 조회하여 size변수에 저장
-    print(paste("데이터의 개수", size))
+    
+    #저장하는 size결정 6개 이상, 12개이하 경우만 파일로 저장함
+    if (size > 0){
+      
+      print(paste("데이터의 개수가", size,"이므로 저장합니다."))
+      
+      #(매우중요) 현 디렉토리에 csv파일로 저장
+      setwd(getwd()) # 작업디렉토리를 현 경로로 설정
+      
+      # 파일 이름 지정
+      path = paste(studentNumber,"_",baseYY,"_",quart,".csv")
+      
+      # 지정된 이름으로 파일 저장
+      write.csv(df,path)
+    }
+    
+    else{
+      print(paste("데이터의 개수가", size,"입니다 저장하지 않습니다."))
+    }
     
     
-    #(매우중요) 현 디렉토리에 csv파일로 저장
-    setwd(getwd()) # 작업디렉토리를 현 경로로 설정
-    
-    # 파일 이름 지정
-    path = paste(studentNumber,"_",baseYY,"_",quart,".csv")
-    
-    # 지정된 이름으로 파일 저장
-    write.csv(df,path)
   }
 }
 
