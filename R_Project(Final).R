@@ -224,11 +224,13 @@ for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2
 # 3번문제 끝
 
 
+# 기말고사 문제 실행 동영상 (비공개)
 
+# 1번문제 : https://youtu.be/hlu9KTECLNw
 
+# 2번문제 : https://youtu.be/dHkKVcjwTmg
 
-
-
+# 3번문제 : https://youtu.be/9Lp1HV7GVkM
 
 
 
