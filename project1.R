@@ -1,58 +1,55 @@
-# install.packages(rvest)
-library(rvest)
+# ÄÄÇ»ÅÍ¼ÒÇÁÆ®¿ş¾î°øÇĞ°ú 20162908 À¯¸íÇö
 
-# 1. ë‹¤ìŒì—ì„œ ë³¸ì¸ ì´ë¦„ ê²€ìƒ‰
+
+
+# ±â¸»°í»ç ´ëÃ¼°úÁ¦ 1¹ø ¹®Á¦
+
+# install.packages(rvest) ÆĞÅ°Áö°¡ ¾ø´Ù¸é ¼³Ä¡
+library(rvest) #»ç¿ëÇÒ ¶óÀÌºê·¯¸® µî·Ï
+
+# 1. ´ÙÀ½¿¡¼­ º»ÀÎ ÀÌ¸§ °Ë»ö
 url.api <- "https://search.daum.net/search?w=web&DA=PGD&enc=utf8&lpp=10&q=%EC%9C%A0%EB%AA%85%ED%98%84&p="
 
 
-titles <- NULL
-descs <- NULL
-addressC <- NULL
+titles <- NULL # ¹®¼­ Å¸ÀÌÆ²µéÀ» ´ãÀ» º¯¼ö
+addressALL <- NULL # ÁÖ¼ÒµéÀ» ´ãÀ» º¯¼ö
 
-# 2. ì›¹ë¬¸ì„œ ë‚´ìš© 3í˜ì´ì§€ê¹Œì§€ ìŠ¤í¬ë©í•‘
+
+# 2. À¥¹®¼­ ³»¿ë 3ÆäÀÌÁö±îÁö ½ºÅ©·¦ÇÎ
 for (page in 1:3){
+  
   url <- paste(url.api, page, sep="")
   html <- read_html(url)
-  html
   
-  # classëª…ì€ .ì„ ì°ì–´ì¤€ë‹¤.
-  # idëŠ” #ì„ ì°ì–´ì¤€ë‹¤.
-
-  #####title  
+  # class¸íÀº .
+  # id¸íÀº #
+  
+  # ¹®¼­ Á¦¸ñ titleº¯¼ö¿¡ ÀúÀå
   title <- html_nodes(html, "#webdocColl.type_fulltext.wid_n")%>%
-    html_nodes(".f_link_b")%>%
-    html_text(trim = TRUE) # ê³µë°±ì œê±°
-
-  #gsub == replace
+    html_nodes(".f_link_b")%>% 
+    html_text(trim = TRUE) # °ø¹éÁ¦°Å
+  
+  #ÇÊ¿ä¾ø´Â \ÄÚµå Á¦°Å
   title <-gsub("\r\n\t",'',title)
   
-  #title
   
-  #trimws : ê³µë°±ì œê±°
-  
-  
-  #####address
+  # ¸µÅ© »çÀÌÆ® ÁÖ¼Ò addressº¯¼ö¿¡ ÀúÀåÀå
   address <- html_nodes(html, "#webdocColl.type_fulltext.wid_n")%>%
     html_nodes(".f_url")%>%
-    html_text(trim = TRUE) # ê³µë°±ì œê±°
+    html_text(trim = TRUE) # °ø¹éÁ¦°Å
   
   
-  #address
-  
+  # Á¦¸ñ°ú ÁÖ¼Ò¸¦ Ã³À½ ¼±¾ğÇÑ º¯¼ö¿¡ Ãß°¡ ÀúÀåÀå
   titles <- c(titles, title)
-  addressC <- c(addressC, address)
-
+  addressALL <- c(addressALL, address)
+  
 }
 
-titles
-addressC
 
-#3. 'ë¬¸ì„œ ì œëª©', 'ë§í¬ì‚¬ì´íŠ¸ì£¼ì†Œ' 2ê°€ì§€ ë‚´ìš© ê°€ì ¸ì™€ì„œ ë°ì´í„° í”„ë ˆì„ìœ¼ë¡œ ì €ì¥
-api = data.frame(title=titles, www = addressC)
+#3. '¹®¼­ Á¦¸ñ', '¸µÅ©»çÀÌÆ®ÁÖ¼Ò' 2°¡Áö ³»¿ë °¡Á®¿Í¼­ µ¥ÀÌÅÍ ÇÁ·¹ÀÓÀ¸·Î ÀúÀå
+api = data.frame(title=titles, www=addressALL)
 
-#4. í…Œì´ë¸” í˜•ì‹ìœ¼ë¡œ ì¶œë ¥
+#4. Å×ÀÌºí Çü½ÄÀ¸·Î Ãâ·Â
 View(api)
 
-
-
-
+# 1¹ø¹®Á¦ ³¡
