@@ -77,6 +77,16 @@ for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2
 # 3번문제 끝
 
 
+# 기말고사 1번문제 실행 영상 (비공개 링크)
+# https://youtu.be/hlu9KTECLNw
+
+# 기말고사 2번문제 실행 영상 (비공개 링크)
+# https://youtu.be/dHkKVcjwTmg
+
+# 기말고사 3번문제 실행 영상 (비공개 링크)
+# https://youtu.be/9Lp1HV7GVkM
+
+
 
 
 
