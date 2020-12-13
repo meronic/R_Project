@@ -1,5 +1,5 @@
 # 컴퓨터소프트웨어공학과 20162908 유명현
-# 기말고사 대체과제 2번 문제
+# 기말고사 대체과제 3번 문제
 
 # 사용하는 라이브러리 올리기기
 library(animation)
@@ -46,13 +46,17 @@ for (baseYY in (baseYY:(baseYY+2))) { # baseYY포함하으로 + 2
         jm <-c(df$jmNm) # 데이터에서 '종목'을 가지고있는 jmNm항목을 jm변수에 저장
         count <- c(df$totcnt) # 데이터에서 '취득자 수'를 가지고 있는 totcnt항목을 count변수에 저장
         
-        # 그래프 작성 과제 그래프 색상 Rainbow
+        # 그래프 작성 과제 그래프 색상 Rainbow #legend추가
+        # Rstudio로 실행시 legend 사이즈가 크게 출력됩니다.기본 Rconsol로 실행해주시길 바랍니다.
         result <- barplot(height = count, names.arg = jm, main = paste("전남지역",baseYY,"년도",quart,"분기"), 
                           col = rainbow(length(count)), xlab="기능장 명", ylab="취득자 수",
                           legend=jm) 
-        
         # 그래프 출력
         result
+        
+        # 그래프의 평균 선 추가
+        abline(h=mean(count), col="orange", lty=1)
+        
         
         #그래프 시간간격 설정
         ani.pause(1)
