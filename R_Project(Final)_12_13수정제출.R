@@ -7,7 +7,7 @@
 library(rvest) #사용할 라이브러리 등록
 
 # 대기시간 설정, 윈도우에서 버벅임
-Sys.sleep(3)
+Sys.sleep(5)
 
 # 다음에서 본인 이름 검색
 url.api <- "https://search.daum.net/search?w=web&DA=PGD&enc=utf8&lpp=10&q=%EC%9C%A0%EB%AA%85%ED%98%84&p="
@@ -55,7 +55,7 @@ api = data.frame(title=titles, www=addressALL)
 View(api)
 
 #### 출력시 대기시간 설정 윈도우에서 실행시 버벅임 #####
-Sys.sleep(3)
+Sys.sleep(10)
 
 ######## 1번문제 끝 ##############
 
